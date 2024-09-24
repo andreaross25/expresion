@@ -95,10 +95,11 @@ def plot(df, control, housekeeping, target):
 plot(df_copy, control, housekeeping, target)
 
 # Guardar los resultados
-def save_results(df, control, housekeeping, target):
-    df = geomean(df, control, housekeeping, target)
-    df.to_csv('expresion_normalizada.csv')
+def save(df, control, housekeeping, target):
+    output = norm(df, control, housekeeping, target)
+    output_2 = geomean(df, control, housekeeping, target)
+    df.to_csv('/Users/andreaross/Desktop/bioinfo_andrea/output.csv', index=False)
 
-save_results(df_copy, control, housekeeping, target)
+save(df_copy, control, housekeeping, target)
 
 # Fin del script
