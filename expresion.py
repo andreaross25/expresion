@@ -47,11 +47,15 @@ def ct(df, control, housekeeping, target):
     ct_mean_housekeeping, ct_mean_target = ct_mean(df, control, housekeeping, target)
     
     # Crear una nueva columna ΔCt
-    df['ΔCt'] = ct_mean_housekeeping - df['mir16']
+    df['ΔCt_housekeeping'] = ct_mean_housekeeping - df[housekeeping]
+    df['ΔCt_target'] = ct_mean_target - df[target]
 
     # Crear una nueva columna ΔΔCt
-    df['ΔΔCt'] = 2 ** df['ΔCt']
+    df['ΔΔCt_housekeeping'] = 2 ** df['ΔCt_housekeeping']
+    df['ΔΔCt_target'] = 2 ** df['ΔCt_target']
 
     return df
 
 print(ct(df_copy, control, housekeeping, target))
+
+# Normalización y expresión normalizada
