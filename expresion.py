@@ -20,16 +20,17 @@ import seaborn
 from scipy.stats import gmean 
 
 # Carga de los datos
-file = '/Users/andreaross/Desktop/bioinfo_andrea/ds.csv' # Ruta del archivo con los datos de expresión génica
+file = '/Users/andreaross/Desktop/bioinfo_andrea/expresion/ds.csv' # Ruta del archivo con los datos de expresión génica
 df = pd.read_csv(file)
 
 # Definición de los grupos experimentales
 control = 2
-housekeeping = 'mir16'
-target = 'mir141'
+housekeeping = 'mir16' # Definir el gen housekeeping
+target = 'mir141' # Definir el gen target
+
 
 # Eliminación de los valores NaN
-df_copy = df[['grupo', 'mir16' , 'mir141']].copy()
+df_copy = df[['grupo', housekeeping , target]].copy()
 df_copy.dropna(inplace=True)
 df_copy.reset_index(drop=True, inplace=True)
 
@@ -98,7 +99,7 @@ plot(df_copy, control, housekeeping, target)
 def save(df, control, housekeeping, target):
     output = norm(df, control, housekeeping, target)
     output_2 = geomean(df, control, housekeeping, target)
-    df.to_csv('/Users/andreaross/Desktop/bioinfo_andrea/output.csv', index=False)
+    df.to_csv('/Users/andreaross/Desktop/bioinfo_andrea/expresion/output.csv', index=False)
 
 save(df_copy, control, housekeeping, target)
 
