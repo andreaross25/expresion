@@ -34,16 +34,24 @@ df_copy.dropna(inplace=True)
 df_copy.reset_index(drop=True, inplace=True)
 
 # Cálculo de CT mean para el gen de referencia y el gen de interés
-def ct_mean(df):
+def ct_mean(df, control, housekeeping, target):
     df_control = df[df['grupo'] == control]
     
-    ct_mean_housekeeping = round(np.mean(df_control[housekeeping]),3)
-    ct_mean_target = round(np.mean(df_control[target]),3)
+    ct_mean_housekeeping = round(np.mean(df_control[housekeeping]), 3)
+    ct_mean_target = round(np.mean(df_control[target]), 3)
 
     return ct_mean_housekeeping, ct_mean_target
     
-print(ct_mean(df_copy))
+# Cálculo del ΔCt y ΔΔCt
+def ct(df, control, housekeeping, target):
+    ct_mean_housekeeping, ct_mean_target = ct_mean(df, control, housekeeping, target)
+    
+    # Crear una nueva columna ΔCt
+    df['ΔCt'] = ct_mean_housekeeping - df['mir16']
 
-# Cálculo del ΔCt
+    # Crear una nueva columna ΔΔCt
+    df['ΔΔCt'] = 2 ** df['ΔCt']
 
+    return df
 
+print(ct(df_copy, control, housekeeping, target))
