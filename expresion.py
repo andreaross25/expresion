@@ -59,3 +59,14 @@ def ct(df, control, housekeeping, target):
 print(ct(df_copy, control, housekeeping, target))
 
 # Normalización y expresión normalizada
+def norm(df, control, housekeeping, target):
+    df = ct(df, control, housekeeping, target)
+    
+    # Normalización de la expresión
+    df['Expresión normalizada'] = df['ΔΔCt_target'] / df['ΔΔCt_housekeeping']
+
+    # Log base 2 de la expresión normalizada
+    df['Log2 Expresión normalizada'] = np.log2(df['Expresión normalizada'])
+    
+    return df
+
