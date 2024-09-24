@@ -79,3 +79,26 @@ def geomean(df, control, housekeeping, target):
     return geomean_values
 
 print(geomean(df_copy, control, housekeeping, target))
+
+# Gráficos
+def plot(df, control, housekeeping, target):
+    df = geomean(df, control, housekeeping, target)
+    
+    # Gráfico de barras
+    plt.figure(figsize=(10, 6))
+    seaborn.barplot(x=df.index, y=df.values, palette='viridis')
+    plt.title('Expresión normalizada de {}'.format(target))
+    plt.ylabel('Expresión normalizada')
+    plt.xlabel('Grupos experimentales')
+    plt.show()
+
+plot(df_copy, control, housekeeping, target)
+
+# Guardar los resultados
+def save_results(df, control, housekeeping, target):
+    df = geomean(df, control, housekeeping, target)
+    df.to_csv('expresion_normalizada.csv')
+
+save_results(df_copy, control, housekeeping, target)
+
+# Fin del script
