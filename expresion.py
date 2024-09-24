@@ -17,7 +17,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn
-from scipy import stats 
+from scipy.stats import gmean 
 
 # Carga de los datos
 file = '/Users/andreaross/Desktop/bioinfo_andrea/ds.csv' # Ruta del archivo con los datos de expresión génica
@@ -70,3 +70,12 @@ def norm(df, control, housekeeping, target):
     
     return df
 
+# Cálculo de la media geométrica
+def geomean(df, control, housekeeping, target):
+    df = norm(df, control, housekeeping, target)
+    
+    geomean_values = df.groupby('grupo')['Expresión normalizada'].apply(lambda x: np.ceil(gmean(x) * 1000) / 1000)
+
+    return geomean_values
+
+print(geomean(df_copy, control, housekeeping, target))
